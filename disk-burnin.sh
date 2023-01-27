@@ -234,8 +234,11 @@ BB_B_ARG=8192
 # badblocks default -c option is 64, and this allows overriding
 BB_C_ARG=64
 
+# smartctl default is to not include -d option. In this script, setting SCTL_D_ARG will call the option with megaraid,N
+SCTL_D_ARG=""
+
 # parse options
-while getopts ':hefo:b:c:x' option; do
+while getopts ':hefdo:b:c:x' option; do
   case "${option}" in
     h)  echo "${USAGE}"
         exit
@@ -251,6 +254,8 @@ while getopts ':hefo:b:c:x' option; do
     b)  BB_B_ARG="${OPTARG}"
         ;;
     c)  BB_C_ARG="${OPTARG}"
+        ;;
+    d)  SCTL_D_ARG="-d megaraid,${OPTARG} "
         ;;
     x)  BB_E_ARG=0
         ;;
@@ -279,6 +284,7 @@ fi
 readonly BB_E_ARG
 readonly BB_B_ARG
 readonly BB_C_ARG
+readonly SCTL_D_ARG
 
 # Drive to burn-in
 DRIVE="$1"
