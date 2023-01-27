@@ -223,8 +223,11 @@ VERSIONS
 # badblocks default -e option is 1, stop testing if a single error occurs
 BB_E_ARG=1
 
+# smartctl default is to not include -d option. In this script, setting SCTL_D_ARG will call the option with megaraid,N
+SCTL_D_ARG=""
+
 # parse options
-while getopts ':hefo:x' option; do
+while getopts ':hefdo:x' option; do
   case "${option}" in
     h)  echo "${USAGE}"
         exit
@@ -237,7 +240,9 @@ while getopts ':hefo:x' option; do
         ;;
     o)  LOG_DIR="${OPTARG}"
         ;;
-    x)  BB_E_ARG=0  
+    d)  SCTL_D_ARG="-d megaraid,${OPTARG} "
+        ;;
+    x)  BB_E_ARG=0
         ;;
     :)  printf 'Missing argument for -%s\n' "${OPTARG}" >&2
         echo "${USAGE}" >&2
@@ -262,6 +267,7 @@ fi
 ################################################################################
 
 readonly BB_E_ARG
+readonly SCTL_D_ARG
 
 # Drive to burn-in
 DRIVE="$1"
