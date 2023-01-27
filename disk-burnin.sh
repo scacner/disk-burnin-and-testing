@@ -309,6 +309,8 @@ readonly HOSTNAME
 readonly OS_FLAVOR="$(uname)"
 
 # SMART static information
+# The below shellcheck was disabled, as not wrapping SCTL_D_ARG in double quotes allows drive info to be gathered.
+# shellcheck disable=SC2086
 readonly SMART_INFO="$(smartctl --info ${SCTL_D_ARG}"${DRIVE}")"
 readonly SMART_CAPABILITIES="$(smartctl --capabilities "${SCTL_D_ARG}""${DRIVE}")"
 
