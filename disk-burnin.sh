@@ -309,7 +309,7 @@ readonly HOSTNAME
 readonly OS_FLAVOR="$(uname)"
 
 # SMART static information
-readonly SMART_INFO="$(smartctl --info ${SCTL_D_ARG}"${DRIVE}")"
+readonly SMART_INFO="$(smartctl --info "${SCTL_D_ARG}""${DRIVE}")"
 readonly SMART_CAPABILITIES="$(smartctl --capabilities "${SCTL_D_ARG}""${DRIVE}")"
 
 ##################################################
