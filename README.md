@@ -50,7 +50,7 @@ The script extracts the drive model and serial number and creates a log filename
 
 ## Usage
 
-`./disk-burnin.sh [-h] [-e] [-f] [-o <directory>] [-x] <disk>`
+`./disk-burnin.sh [-h] [-e] [-f] [-o <directory>] [-d <megaraid disk number>] [-x] <disk>`
 
 ### Options
 
@@ -58,6 +58,7 @@ The script extracts the drive model and serial number and creates a log filename
 * `-e`: show extended help text
 * `-f`: run a full, destructive test. Disables the default 'dry-run mode'. **ALL DATA ON THE DISK WILL BE LOST!**
 * `-o <directory>`: write log files to `<directory>` (default: working directory `$(pwd)`)
+* `-d <megaraid disk number>`: MegaRAID controller's disk number, if applicable.
 * `-x`: perform a full pass of `badblocks`, using the `-e 0` option.
 * `<disk>`: disk to burn-in (`/dev/` may be omitted)
 
