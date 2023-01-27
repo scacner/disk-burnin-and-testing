@@ -297,8 +297,8 @@ readonly HOSTNAME
 readonly OS_FLAVOR="$(uname)"
 
 # SMART static information
-readonly SMART_INFO="$(smartctl --info "${DRIVE}")"
-readonly SMART_CAPABILITIES="$(smartctl --capabilities "${DRIVE}")"
+readonly SMART_INFO="$(smartctl --info "${SCTL_D_ARG}""${DRIVE}")"
+readonly SMART_CAPABILITIES="$(smartctl --capabilities "${SCTL_D_ARG}""${DRIVE}")"
 
 ##################################################
 # Get SMART information value.
@@ -540,6 +540,7 @@ poll_selftest_complete() {
 # Globals:
 #   DRIVE
 #   LOG_FILE
+#   SCTL_D_ARG
 # Arguments:
 #   Test type:
 #     - short
@@ -548,11 +549,11 @@ poll_selftest_complete() {
 ##################################################
 run_smart_test() {
   log_header "Running SMART $1 test"
-  dry_run_wrapper "smartctl --test=\"$1\" \"${DRIVE}\""
+  dry_run_wrapper "smartctl --test=\"$1\" ${SCTL_D_ARG}\"${DRIVE}\""
   log_info "SMART $1 test started, awaiting completion for $2 seconds ..."
   dry_run_wrapper "sleep \"$2\""
   dry_run_wrapper "poll_selftest_complete"
-  dry_run_wrapper "smartctl --log=selftest \"${DRIVE}\" | tee -a \"${LOG_FILE}\""
+  dry_run_wrapper "smartctl --log=selftest ${SCTL_D_ARG}\"${DRIVE}\" | tee -a \"${LOG_FILE}\""
   log_info "Finished SMART $1 test"
 }
 
@@ -581,12 +582,13 @@ run_badblocks_test() {
 # Globals:
 #   DRIVE
 #   LOG_FILE
+#   SCTL_D_ARG
 # Arguments:
 #   None
 ##################################################
 log_full_device_info() {
   log_header "Drive information"
-  dry_run_wrapper "smartctl --xall --vendorattribute=7,hex48 \"${DRIVE}\" | tee -a \"${LOG_FILE}\""
+  dry_run_wrapper "smartctl --xall --vendorattribute=7,hex48 ${SCTL_D_ARG}\"${DRIVE}\" | tee -a \"${LOG_FILE}\""
 }
 
 ##################################################
