@@ -373,9 +373,7 @@ fi
 readonly DISK_TYPE
 
 # Get disk serial number
-SERIAL_NUMBER="$(get_smart_info_value "Serial Number")"
-[ -z "${SERIAL_NUMBER}" ] && SERIAL_NUMBER="$(get_smart_info_value "Serial number")"
-readonly SERIAL_NUMBER
+readonly SERIAL_NUMBER="$(get_smart_info_value "Serial Number")"
 
 # SMART short test duration
 readonly SHORT_TEST_MINUTES="$(get_smart_test_duration "Short")"
