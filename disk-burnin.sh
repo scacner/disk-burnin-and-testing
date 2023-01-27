@@ -318,7 +318,7 @@ readonly HOSTNAME
 readonly OS_FLAVOR="$(uname)"
 
 # SMART static information
-readonly SMART_INFO="$(smartctl --info "${SCTL_D_ARG}""${DRIVE}")"
+readonly SMART_INFO="$(smartctl --info ${SCTL_D_ARG}"${DRIVE}")"
 readonly SMART_CAPABILITIES="$(smartctl --capabilities "${SCTL_D_ARG}""${DRIVE}")"
 
 ##################################################
@@ -382,7 +382,9 @@ fi
 readonly DISK_TYPE
 
 # Get disk serial number
-readonly SERIAL_NUMBER="$(get_smart_info_value "Serial Number")"
+SERIAL_NUMBER="$(get_smart_info_value "Serial Number")"
+[ -z "${SERIAL_NUMBER}" ] && SERIAL_NUMBER="$(get_smart_info_value "Serial number")"
+readonly SERIAL_NUMBER
 
 # SMART short test duration
 readonly SHORT_TEST_MINUTES="$(get_smart_test_duration "Short")"
