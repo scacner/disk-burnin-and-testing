@@ -239,7 +239,7 @@ BB_E_ARG=1
 SCTL_D_ARG=""
 
 # parse options
-while getopts ':hefdo:x' option; do
+while getopts ':hefd:o:x' option; do
   case "${option}" in
     h)  echo "${USAGE}"
         exit
