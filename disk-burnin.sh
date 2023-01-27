@@ -29,7 +29,7 @@ readonly USAGE=\
     $(basename "$0") -- disk burn-in program
 
 SYNOPSIS
-    $(basename "$0") [-h] [-e] [-f] [-o <directory>] [-x] <disk>
+    $(basename "$0") [-h] [-e] [-f] [-o <directory>] [-d <megaraid disk number>] [-x] <disk>
 
 DESCRIPTION
     A script to simplify the process of burning-in disks. Only intended for use
@@ -44,13 +44,14 @@ DESCRIPTION
     In order to perform tests on drives, you will need to provide the -f option.
 
 OPTIONS
-    -h                Show help text
-    -e                Show extended help text
-    -f                Force script to run in destructive mode
-                      ALL DATA ON THE DISK WILL BE LOST!
-    -o <directory>    Write log files to <directory> (default: $(pwd))
-    -x                Run full pass of badblocks instead of exiting on first error
-    <disk>            Disk to burn-in (/dev/ may be omitted)
+    -h                           Show help text
+    -e                           Show extended help text
+    -f                           Force script to run in destructive mode
+                                 ALL DATA ON THE DISK WILL BE LOST!
+    -o <directory>               Write log files to <directory> (default: $(pwd))
+    -d <megaraid disk number>    Pass in the MegaRAID controller's disk number to smartctl
+    -x                           Run full pass of badblocks instead of exiting on first error
+    <disk>                       Disk to burn-in (/dev/ may be omitted)
 
 EXAMPLES
     $(basename "$0") sda
@@ -218,7 +219,18 @@ VERSIONS
         Changed disk type detection so that we assume all drives are mechanical drives
         unless they explicitly return 'Solid State Drive' for Rotational Rate.
         Removed datestamp from every line of log output, only emitting it in log headers.
-        Minor reformatting."
+        Minor reformatting.
+
+    AS, 20 Nov 2021
+        Try to use hostnamectl to get hostname if hostname command fails.
+        Made grep case insensitive for Serial number on SAS vs Serial Number on ATA.
+        Changed 'discard first two columns' to 'discard everything until first colon' in get_smart_info_value.
+        Added colon at the end of every inquired smart info.
+        Changed test behavior 'if success in smartctl then success; else if error in smartctl then error' to
+        'if ATA error in smartctl then error; else if no test in progress then success' in poll_selftest_complete.
+
+    SC, 27 Jan 2023
+        Added -d option to control the smartctl -d option, allowing testing for drives in MegaRAID controllers."
 
 # badblocks default -e option is 1, stop testing if a single error occurs
 BB_E_ARG=1
