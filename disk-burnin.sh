@@ -29,7 +29,7 @@ readonly USAGE=\
     $(basename "$0") -- disk burn-in program
 
 SYNOPSIS
-    $(basename "$0") [-h] [-b <block_size>] [-c <num_blocks>] [-e] [-f] [-o <directory>] [-x] <disk>
+    $(basename "$0") [-h] [-b <block_size>] [-c <num_blocks>] [-e] [-f] [-o <directory>] [-d <megaraid disk number>] [-x] <disk>
 
 DESCRIPTION
     A script to simplify the process of burning-in disks. Only intended for use
@@ -44,15 +44,16 @@ DESCRIPTION
     In order to perform tests on drives, you will need to provide the -f option.
 
 OPTIONS
-    -h                Show help text
-    -e                Show extended help text
-    -b <block_size>   Override block size (defaults to 8192)
-    -c <num_blocks>   Override concurrent number of blocks tested
-    -f                Force script to run in destructive mode
-                      ALL DATA ON THE DISK WILL BE LOST!
-    -o <directory>    Write log files to <directory> (default: $(pwd))
-    -x                Run full pass of badblocks instead of exiting on first error
-    <disk>            Disk to burn-in (/dev/ may be omitted)
+    -h                           Show help text
+    -e                           Show extended help text
+    -b <block_size>              Override block size (defaults to 8192)
+    -c <num_blocks>              Override concurrent number of blocks tested
+    -f                           Force script to run in destructive mode
+                                 ALL DATA ON THE DISK WILL BE LOST!
+    -o <directory>               Write log files to <directory> (default: $(pwd))
+    -d <megaraid disk number>    Pass in the MegaRAID controller's disk number to smartctl
+    -x                           Run full pass of badblocks instead of exiting on first error
+    <disk>                       Disk to burn-in (/dev/ may be omitted)
 
 EXAMPLES
     $(basename "$0") sda
@@ -223,7 +224,10 @@ VERSIONS
         Minor reformatting.
 
     KY, 30 May 2022
-        Added -b & -c options to control respective badblocks options."
+        Added -b & -c options to control respective badblocks options.
+
+    SC, 27 Jan 2023
+        Added -d option to control the smartctl -d option, allowing testing for drives in MegaRAID controllers."
 
 # badblocks default -e option is 1, stop testing if a single error occurs
 BB_E_ARG=1
