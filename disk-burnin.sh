@@ -529,14 +529,16 @@ log_runtime_info() {
 poll_selftest_complete() {
   l_poll_duration_seconds=0
   while [ "${l_poll_duration_seconds}" -lt "${POLL_TIMEOUT_SECONDS}" ]; do
-    smartctl --all "${DRIVE}" \
+    # shellcheck disable=SC2086
+    smartctl --all ${SCTL_D_ARG}"${DRIVE}" \
       | grep -i "of the test failed\." > /dev/null 2>&1
     l_status="$?"
     if [ "${l_status}" -eq 0 ]; then
       log_info "SMART self-test failed"
       return 0
     fi
-    smartctl --all "${DRIVE}" \
+    # shellcheck disable=SC2086
+    smartctl --all ${SCTL_D_ARG}"${DRIVE}" \
       | grep -E "Self-test execution status:.*(progress|remaining)" > /dev/null 2>&1
     l_status="$?"
     if [ "${l_status}" -ne 0 ]; then
