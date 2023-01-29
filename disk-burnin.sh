@@ -226,8 +226,9 @@ VERSIONS
     KY, 30 May 2022
         Added -b & -c options to control respective badblocks options.
 
-    SC, 27 Jan 2023
-        Added -d option to control the smartctl -d option, allowing testing for drives in MegaRAID controllers."
+    SC, 29 Jan 2023
+        Added -d option to control the smartctl -d option, allowing testing for drives in MegaRAID controllers.
+        Attempt to check for badblocks test failure."
 
 # badblocks default -e option is 1, stop testing if a single error occurs
 BB_E_ARG=1
@@ -597,6 +598,10 @@ run_badblocks_test() {
   log_header "Running badblocks test"
   if [ "${DISK_TYPE}" != "SSD" ]; then
     dry_run_wrapper "badblocks -b ${BB_B_ARG} -wsv -c ${BB_C_ARG} -e ${BB_E_ARG} -o \"${BB_File}\" \"${DRIVE}\""
+    bb_status="$?"
+    if [ "${bb_status}" -ne 0 ]; then
+      log_info "FAILED: badblocks test"
+    fi
   else
     log_info "SKIPPED: badblocks for ${DISK_TYPE} device"
   fi
