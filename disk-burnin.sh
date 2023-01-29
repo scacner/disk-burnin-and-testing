@@ -229,7 +229,7 @@ VERSIONS
         Changed test behavior 'if success in smartctl then success; else if error in smartctl then error' to
         'if ATA error in smartctl then error; else if no test in progress then success' in poll_selftest_complete.
 
-    SC, 27 Jan 2023
+    SC, 29 Jan 2023
         Added -d option to control the smartctl -d option, allowing testing for drives in MegaRAID controllers."
 
 # badblocks default -e option is 1, stop testing if a single error occurs
