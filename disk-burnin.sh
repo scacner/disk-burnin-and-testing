@@ -534,7 +534,7 @@ poll_selftest_complete() {
       | grep -i "of the test failed\." > /dev/null 2>&1
     l_status="$?"
     if [ "${l_status}" -eq 0 ]; then
-      log_info "SMART self-test failed"
+      log_info "FAILED: SMART self-test"
       return 0
     fi
     # shellcheck disable=SC2086
@@ -548,7 +548,7 @@ poll_selftest_complete() {
     sleep "${POLL_INTERVAL_SECONDS}"
     l_poll_duration_seconds="$(( l_poll_duration_seconds + POLL_INTERVAL_SECONDS ))"
   done
-  log_info "SMART self-test timeout threshold exceeded"
+  log_info "NOTE: SMART self-test timeout threshold exceeded"
   return 1
 }
 
