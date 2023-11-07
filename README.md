@@ -41,9 +41,18 @@ You should periodically monitor the burn-in progress and check for errors, parti
 | 197 | Current_Pending_Sector  |
 | 198 | Offline_Uncorrectable   |
 
-These indicate possible problems with the drive. You therefore may wish to abort the remaining tests and proceed with an RMA exchange for new drives or discard old ones. Also please note that this list is not exhaustive.
+The SMART information of SAS drives may not include all the attributes listed above. It's recommended to check the
+values of the following items when testing SAS drives:
 
-The script extracts the drive model and serial number and creates a log filename of the form `burnin-[model]_[serial number].log`.
+* Elements in grown defect list
+* Total Uncorrected Errors
+
+Any errors from the attributes in the table or list above indicate possible problems with the drive. You therefore may
+wish to abort the remaining tests and proceed with an RMA exchange for new drives or discard old ones. Also please note
+that these attributes named are not exhaustive.
+
+The script extracts the drive model and serial number and creates a log filename of the form
+`burnin-[model]_[serial number].log`.
 
 ## `badblocks` Options
 
